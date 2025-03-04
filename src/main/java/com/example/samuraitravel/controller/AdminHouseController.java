@@ -75,7 +75,7 @@ public class AdminHouseController {
 		return "redirect:/admin/houses";
 	}
 	
-	@GetMapping("/houses/{id}/edit")
+	@GetMapping("/{id}/edit")
 	public String edit (@PathVariable(name = "id") Integer id, Model model) {
 		House house = houseRepository.getReferenceById(id);
 		String imageName = house.getImageName();
@@ -96,6 +96,13 @@ public class AdminHouseController {
 		houseService.update(houseEditForm);
 		redirectAttributes.addFlashAttribute("successMessage", "民宿情報を編集しました。");
 		
+		return "redirect:/admin/houses";
+	}
+	
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+		houseRepository.deleteById(id);
+		redirectAttributes.addFlashAttribute("successMessage", "民宿を削除しました。");
 		return "redirect:/admin/houses";
 	}
 }
